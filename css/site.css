@@ -44,11 +44,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 8px 20px 40px; }
 h2 { font: 800 28px/1 var(--display); text-transform: uppercase; letter-spacing: .04em; margin: 0; }
 .blink { color: var(--accent); animation: blink 1.2s steps(2) infinite; display: inline-block; }
 @keyframes blink { 50% { opacity: .15; } }
-.filters { display: flex; gap: 6px; }
-.chip { all: unset; cursor: pointer; padding: 5px 14px; border: 1.5px solid var(--line); border-radius: 999px; font: 600 15px var(--body); color: var(--mute); }
-.chip:hover { color: var(--ink); border-color: var(--accent); }
-.chip.on { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
-.chip:focus-visible, .nav:focus-visible, .view-toggle button:focus-visible, .play:focus-visible, .code:focus-visible, .pager button:focus-visible, .qstart:focus-visible, .qcard:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.nav:focus-visible, .view-toggle button:focus-visible, .play:focus-visible, .code:focus-visible, .pager button:focus-visible, .qstart:focus-visible, .qcard:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 .stage { position: relative; height: clamp(300px, 46vw, 500px); perspective: 1600px; outline: none; margin-top: 8px; touch-action: pan-y; }
 .stage:focus-visible { outline: 2px dashed var(--line); outline-offset: 8px; border-radius: 18px; }

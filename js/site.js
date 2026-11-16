@@ -37,8 +37,9 @@
 
   const $ = (id) => document.getElementById(id);
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let active = 0, filter = "all", view = "desktop";
-  const visible = () => SITES.map((s, i) => i).filter((i) => filter === "all" || SITES[i].kind === filter);
+  let active = 0, view = "desktop";
+  // Every site is shown (category filters were removed while there are only a few sites).
+  const visible = () => SITES.map((s, i) => i);
 
   // ---------------------------------------------------------------- cards
   const deck = $("deck");
@@ -169,13 +170,6 @@
     if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
   });
 
-  // filters
-  document.querySelectorAll(".chip[data-f]").forEach((b) => b.addEventListener("click", () => {
-    filter = b.dataset.f;
-    document.querySelectorAll(".chip[data-f]").forEach((x) => { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
-    if (!visible().includes(active)) active = visible()[0];
-    go(active);
-  }));
   // desktop / phone screenshot
   document.querySelectorAll(".view-toggle button").forEach((b) => b.addEventListener("click", () => {
     view = b.dataset.v;
