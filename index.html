@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kimble Jennings · Sites &amp; Games</title>
+  <meta name="description" content="Sports stat tools, games and side projects by Kimble Jennings.">
+  <meta name="theme-color" content="#070b14">
+  <meta property="og:title" content="Kimble Jennings · Sites &amp; Games">
+  <meta property="og:description" content="Stat Analysis, Who Had More?, Wrestling Coach and Mock Sportsbook.">
+  <meta property="og:image" content="https://kimblejennings97.github.io/kimble-jennings-sites/img/stat-desktop.webp">
+  <meta property="og:url" content="https://kimblejennings97.github.io/kimble-jennings-sites/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070b14'/%3E%3Ctext x='16' y='22' font-family='Arial Black,Arial' font-weight='900' font-size='15' text-anchor='middle' fill='%23ffd23f'%3EKJ%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <div class="brand">
+      <span class="badge" aria-hidden="true">KJ</span>
+      <div>
+        <h1>Kimble Jennings</h1>
+        <p class="tag">Sports stat tools, games &amp; side projects</p>
+      </div>
+    </div>
+    <div class="ticker" aria-label="Live data">
+      <div class="ticker-track" id="ticker">
+        <span class="tick"><i class="dot"></i>Loading live data…</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="select" aria-labelledby="selTitle">
+      <div class="select-head">
+        <h2 id="selTitle"><span class="blink" aria-hidden="true">▶</span> Select a site</h2>
+        <div class="filters" role="group" aria-label="Filter">
+          <button class="chip on" data-f="all" aria-pressed="true">All</button>
+          <button class="chip" data-f="game" aria-pressed="false">Games</button>
+          <button class="chip" data-f="stats" aria-pressed="false">Stats</button>
+        </div>
+      </div>
+
+      <div class="stage" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="Sites. Use the left and right arrow keys to browse and Enter to open.">
+        <button class="nav prev" id="prev" aria-label="Previous site">‹</button>
+        <div class="deck" id="deck"></div>
+        <button class="nav next" id="next" aria-label="Next site">›</button>
+      </div>
+
+      <div class="detail" id="detail" aria-live="polite">
+        <div class="detail-main">
+          <div class="detail-kicker"><span id="dKind"></span><span class="status" id="dStatus"><i></i>checking…</span></div>
+          <h3 id="dTitle"></h3>
+          <p id="dDesc"></p>
+          <ul class="feats" id="dFeats"></ul>
+        </div>
+        <div class="detail-side">
+          <div class="view-toggle" role="group" aria-label="Screenshot">
+            <button data-v="desktop" class="on" aria-pressed="true">Desktop</button>
+            <button data-v="mobile" aria-pressed="false">Phone</button>
+          </div>
+          <a class="play" id="dOpen" href="#" target="_blank" rel="noopener">Open <span aria-hidden="true">▶</span></a>
+          <a class="code" id="dCode" href="#" target="_blank" rel="noopener">View code</a>
+          <p class="url" id="dUrl"></p>
+        </div>
+      </div>
+      <div class="pager" id="pager" role="tablist" aria-label="Choose a site"></div>
+      <p class="keys" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> browse · <kbd>Enter</kbd> open · swipe on phones</p>
+    </section>
+
+    <section class="quick" aria-labelledby="qTitle">
+      <div class="quick-head">
+        <div>
+          <h2 id="qTitle">Quick round: <em>Who had more?</em></h2>
+          <p class="muted">Real NFL seasons from the game's data. Pick the bigger number.</p>
+        </div>
+        <div class="qscore"><b id="qStreak">0</b><span>streak</span><b id="qBest">0</b><span>best</span></div>
+      </div>
+      <div class="qboard" id="qboard">
+        <button class="qstart" id="qStart">Play a round <span aria-hidden="true">▶</span></button>
+      </div>
+      <p class="qfoot"><a href="https://kimblejennings97.github.io/whohadmore/" target="_blank" rel="noopener">Play the full game: MLB, NBA, NHL, WNBA, soccer, careers →</a></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Built with plain HTML, CSS and JavaScript. Stats refresh daily from free public data (nflverse, ESPN, MLB Stats API).
+      Unofficial fan projects, not affiliated with any league or team.</p>
+    <p><a href="https://github.com/kimblejennings97" target="_blank" rel="noopener">github.com/kimblejennings97</a></p>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
