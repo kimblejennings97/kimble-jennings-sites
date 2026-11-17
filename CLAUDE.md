@@ -9,4 +9,5 @@ Live: https://kimblejennings97.github.io/kimble-jennings-sites/ (GitHub Pages, `
   Wrestling Coach also has `wrestling-moves.webp`, shown when hovering its card.
 - Live bits: ticker reads `meta.json` from the stat-analysis `data` branch; each card pings its site (no-cors) for an
   online dot; "Quick round" loads `data-nfl.js` from the live Who Had More site.
+- Icons: gold trophy home-screen icon drawn as SVG in `tools/icon.html`; `powershell -File tools/make-icons.ps1 img\icons` renders the PNGs (apple-touch 180, 192, 512, favicon 32) used by `index.html` and `manifest.webmanifest`.
 - Not listed on purpose: recipe-box (household app with no login; must stay unlisted) and the trading dashboard.

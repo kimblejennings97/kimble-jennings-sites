@@ -1,0 +1,14 @@
+{
+  "name": "Kimble Jennings · Sites & Games",
+  "short_name": "KJ Sites",
+  "description": "Sports stat tools, games and side projects by Kimble Jennings.",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#070b14",
+  "theme_color": "#070b14",
+  "icons": [
+    { "src": "img/icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "img/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
