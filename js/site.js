@@ -19,7 +19,7 @@
     },
     {
       id: "wrestling", kind: "game", label: "Wrestling Coach", color: "#ff5a4e",
-      url: "https://wrestling-coach.wrestling-coach.workers.dev/", code: "https://github.com/kimblejennings97/wrestling-coach",
+      url: "https://wrestling-coach.kimble-jennings.workers.dev/", code: "https://github.com/kimblejennings97/wrestling-coach",
       img: "img/wrestling-desktop.webp", alt: "img/wrestling-moves.webp", mobile: "img/wrestling-mobile.webp",
       kicker: "Coaching sim",
       desc: "Take over a Division I wrestling program. Recruit, set lineups, train, run the dual schedule and tournaments, and watch every bout play out move by move, folkstyle and freestyle.",
