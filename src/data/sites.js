@@ -18,6 +18,14 @@ export const SITES = [
     stack: ["Python", "pandas", "yfinance", "GitHub Actions"],
   },
   {
+    id: "tkyh", group: "games", label: "They Know You're Here", kicker: "First-person horror",
+    url: "https://kimblejennings97.github.io/they-know-youre-here/", code: "https://github.com/kimblejennings97/they-know-youre-here",
+    img: "img/tkyh-ingame.webp", alt: "img/tkyh-desktop.webp", mobile: "img/tkyh-mobile.webp",
+    desc: "Walk an abandoned summer camp, a dead 90s arcade or a haunted castle with only a flashlight. Find what was lost and finish the tasks, and hide when they hear you. The more you finish, the more of them come.",
+    feats: ["3 maps, 3 monsters", "Randomized objectives", "Hide in lockers & bushes", "Easy / Hard · 5–30 min", "Phone + desktop"],
+    stack: ["three.js", "Web Audio", "ES modules", "GitHub Pages"],
+  },
+  {
     id: "whm", group: "games", label: "Who Had More?", kicker: "Trivia game",
     url: "https://kimblejennings97.github.io/whohadmore/", code: "https://github.com/kimblejennings97/whohadmore",
     img: "img/whm-desktop.webp", mobile: "img/whm-mobile.webp",

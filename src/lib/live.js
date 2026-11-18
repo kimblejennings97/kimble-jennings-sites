@@ -43,6 +43,20 @@ export function useFeed() {
   return feed;
 }
 
+// Momentum Picks publishes picks.json (date + top picks per strategy) next to its dashboard.
+export function usePicks() {
+  const [picks, setPicks] = useState(null);
+  useEffect(() => {
+    let alive = true;
+    const url = SITES.find((s) => s.id === "momentum").url + "picks.json";
+    const run = () => fetch(`${url}?t=${Date.now()}`).then((r) => (r.ok ? r.json() : null)).then((j) => alive && j && setPicks(j)).catch(() => {});
+    run();
+    const t = setInterval(run, 30 * 60 * 1000);
+    return () => { alive = false; clearInterval(t); };
+  }, []);
+  return picks;
+}
+
 export const fmtStamp = (d) => d ? d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "—";
 
 // Ticker lines for the hero (same items as the old ticker)

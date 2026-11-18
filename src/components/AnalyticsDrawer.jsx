@@ -26,10 +26,15 @@ function Lamp({ v }) {
   return <span className={`inline-block h-1.5 w-1.5 rounded-full ${c}`} />;
 }
 
-export default function AnalyticsDrawer({ feed, status, onClose }) {
+export default function AnalyticsDrawer({ feed, picks, status, onClose }) {
   const now = useClock(1000);
-  const marquee = [...tickerItems(feed).map(([k, v]) => `${k} ${v}`), `Momentum Picks next rebuild ${day(nextFirst(now))}`];
   const [stat, momentum] = ANALYTICS;
+  // stock picks row (under MLB) from Momentum Picks' picks.json; falls back to plain text until it loads
+  const top = picks?.strategies?.[0]?.picks?.[0];
+  const asOf = picks?.as_of ? new Date(picks.as_of + "T12:00:00") : null;
+  const md = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const stockRow = { key: "S&P", through: top && asOf ? `${md(asOf)} top pick ${top.ticker}` : "Momentum top 20 picks", live: true, href: momentum.url, link: "Stock picks ↗" };
+  const marquee = [...tickerItems(feed).map(([k, v]) => `${k} ${v}`), ...(top ? [`Top stock pick ${top.ticker}`] : []), `Momentum Picks next rebuild ${day(nextFirst(now))}`];
 
   return (
     <div className="min-h-full font-mono text-[13px] text-ink-2">
@@ -65,21 +70,22 @@ export default function AnalyticsDrawer({ feed, status, onClose }) {
         {/* data feeds board */}
         <section aria-labelledby="feedsT">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 id="feedsT" className="text-[11px] uppercase tracking-[0.22em] text-amber-led/80">Data feeds · Stat Analysis</h2>
+            <h2 id="feedsT" className="text-[11px] uppercase tracking-[0.22em] text-amber-led/80">Data feeds · Stat Analysis &amp; Momentum Picks</h2>
             <span className="text-[11px] text-ink-faint">Refreshed {fmtStamp(feed.refreshed)}</span>
           </div>
           <div className="mt-3 rounded-xl border border-amber-led/10 bg-[#080604]">
             <div className="hidden grid-cols-[70px_1fr_90px_80px_auto] items-center gap-4 border-b border-amber-led/10 px-4 py-2 lg:grid">
               <Label>League</Label><Label>Data through</Label><Label>Status</Label><Label>Seasons</Label><Label>Launch</Label>
             </div>
-            {(feed.leagues.length ? feed.leagues : [{ key: "---", through: feed.loading ? "Loading" : "Feed offline", live: null, seasons: 0 }]).map((l, r) => (
+            {[...(feed.leagues.length ? feed.leagues : [{ key: "---", through: feed.loading ? "Loading" : "Feed offline", live: null, seasons: 0 }]), stockRow].map((l, r) => (
               // phones/tablets: stacked; desktop: one board row
               <div key={l.key} className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-amber-led/[0.06] px-4 py-3 text-[14px] last:border-0 sm:text-[16px] lg:grid lg:grid-cols-[70px_1fr_90px_80px_auto] lg:gap-4 lg:py-2.5 lg:text-[17px]">
                 <SplitFlap text={l.key} len={3} start={r * 120} />
                 <span className="order-last w-full lg:order-none lg:w-auto"><SplitFlap text={l.through} len={24} start={r * 120 + 60} stagger={12} /></span>
                 <SplitFlap text={l.live == null ? "" : l.live ? "LIVE" : "FINAL"} len={5} start={r * 120 + 200} />
                 <span className="hidden items-center gap-1.5 sm:flex"><SplitFlap text={l.seasons ? two(l.seasons) : ""} len={2} start={r * 120 + 260} /><span className="text-[10px] uppercase tracking-widest text-amber-dim lg:hidden">seasons</span></span>
-                {l.sport ? <span className="ml-auto lg:ml-0"><Key href={statLink(l.sport)}>{l.key} model ↗</Key></span> : <span />}
+                {l.href ? <span className="ml-auto lg:ml-0"><Key href={l.href}>{l.link}</Key></span>
+                  : l.sport ? <span className="ml-auto lg:ml-0"><Key href={statLink(l.sport)}>{l.key} model ↗</Key></span> : <span />}
               </div>
             ))}
           </div>
@@ -119,6 +125,7 @@ export default function AnalyticsDrawer({ feed, status, onClose }) {
                       </>
                     ) : (
                       <>
+                        {asOf && <div className="flex justify-between gap-3"><dt className="text-ink-faint">Picks as of</dt><dd className="text-amber-led/90">{day(asOf)}</dd></div>}
                         <div className="flex justify-between gap-3"><dt className="text-ink-faint">Rebuilds</dt><dd>1st of each month</dd></div>
                         <div className="flex justify-between gap-3"><dt className="text-ink-faint">Next rebuild</dt><dd className="text-amber-led/90">{day(nextFirst(now))}</dd></div>
                         <div className="flex justify-between gap-3"><dt className="text-ink-faint">Universe</dt><dd>S&amp;P 500</dd></div>

@@ -87,8 +87,8 @@ export default function Hero({ feed, onOpen }) {
       </main>
 
       <footer className="px-6 pb-8 text-center text-[12px] leading-relaxed text-ink-faint">
-        <p className="mx-auto max-w-2xl">Built with plain HTML, CSS and JavaScript. Stats refresh daily from free public data (nflverse, ESPN, MLB Stats API).
-          Unofficial fan projects, not affiliated with any league or team.</p>
+        <p className="mx-auto max-w-2xl">This page is built with React, Tailwind CSS and Framer Motion. The sites themselves are mostly plain JavaScript, hosted on GitHub Pages and Cloudflare.
+          Stats refresh daily from free public data (nflverse, ESPN, MLB Stats API). Unofficial fan projects, not affiliated with any league or team.</p>
         <p className="mt-2"><a className="text-ink-mute no-underline transition-colors hover:text-ink" href="https://github.com/kimblejennings97" target="_blank" rel="noopener">github.com/kimblejennings97</a></p>
       </footer>
     </div>

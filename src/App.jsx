@@ -4,7 +4,7 @@ import Hero from "./components/Hero.jsx";
 import Drawer from "./components/Drawer.jsx";
 import GamesDrawer from "./components/GamesDrawer.jsx";
 import AnalyticsDrawer from "./components/AnalyticsDrawer.jsx";
-import { useFeed, useStatus } from "./lib/live.js";
+import { useFeed, usePicks, useStatus } from "./lib/live.js";
 
 const DRAWERS = ["games", "analytics"];
 const fromHash = () => (DRAWERS.includes(location.hash.slice(1)) ? location.hash.slice(1) : null);
@@ -13,6 +13,7 @@ export default function App() {
   const [open, setOpen] = useState(fromHash);
   const feed = useFeed();
   const status = useStatus();
+  const picks = usePicks();
 
   // #games / #analytics deep links, and the browser back button closes a drawer
   const pushed = useRef(false);
@@ -67,7 +68,7 @@ export default function App() {
         <GamesDrawer status={status} onClose={() => show(null)} />
       </Drawer>
       <Drawer open={open === "analytics"} onClose={() => show(null)} label="Analytics" tone="analytics">
-        <AnalyticsDrawer feed={feed} status={status} onClose={() => show(null)} />
+        <AnalyticsDrawer feed={feed} picks={picks} status={status} onClose={() => show(null)} />
       </Drawer>
     </>
   );
