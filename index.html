@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Kimble Jennings · Sites &amp; Games</title>
   <meta name="description" content="Sports stat tools, games and side projects by Kimble Jennings.">
-  <meta name="theme-color" content="#070b14">
+  <meta name="theme-color" content="#09090b">
   <meta property="og:title" content="Kimble Jennings · Sites &amp; Games">
   <meta property="og:description" content="Stat Analysis, Who Had More?, Wrestling Coach, Mock Sportsbook and Momentum Picks.">
   <meta property="og:image" content="https://kimblejennings97.github.io/kimble-jennings-sites/img/stat-desktop.webp">
@@ -16,12 +16,10 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-  <canvas id="bg" aria-hidden="true"></canvas>
-
   <header class="top">
     <div class="brand">
       <span class="badge" aria-hidden="true">KJ</span>
@@ -38,34 +36,33 @@
   </header>
 
   <main>
-    <section class="select" aria-labelledby="selTitle">
-      <div class="select-head">
-        <h2 id="selTitle"><span class="blink" aria-hidden="true">▶</span> Select a site</h2>
-      </div>
-
-      <div class="stage" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="Sites. Use the left and right arrow keys to browse and Enter to open.">
-        <button class="nav prev" id="prev" aria-label="Previous site">‹</button>
-        <div class="deck" id="deck"></div>
-        <button class="nav next" id="next" aria-label="Next site">›</button>
-      </div>
-
-      <div class="detail" id="detail" aria-live="polite">
-        <div class="detail-main">
-          <div class="detail-kicker"><span id="dKind"></span><span class="status" id="dStatus"><i></i>checking…</span></div>
-          <h3 id="dTitle"></h3>
-          <p id="dDesc"></p>
-          <ul class="feats" id="dFeats"></ul>
+    <section class="select" aria-label="Sites">
+      <article class="showcase" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="Sites. Use the left and right arrow keys to browse and Enter to open.">
+        <div class="frame">
+          <div class="chrome"><i></i><i></i><i></i><span id="dChromeUrl"></span></div>
+          <a class="shot" id="dShot" href="#" target="_blank" rel="noopener" tabindex="-1">
+            <img id="dImg" alt="" decoding="async">
+            <img id="dAlt" class="alt" alt="" decoding="async" hidden>
+          </a>
         </div>
-        <div class="detail-side">
-          <div class="view-toggle" role="group" aria-label="Screenshot">
-            <button data-v="desktop" class="on" aria-pressed="true">Desktop</button>
-            <button data-v="mobile" aria-pressed="false">Phone</button>
+        <div class="detail" id="detail" aria-live="polite">
+          <div class="detail-main">
+            <div class="detail-kicker"><i class="hue" aria-hidden="true"></i><span id="dKind"></span><span class="status" id="dStatus"><i></i>checking…</span></div>
+            <h3 id="dTitle"></h3>
+            <p id="dDesc"></p>
+            <ul class="feats" id="dFeats"></ul>
           </div>
-          <a class="play" id="dOpen" href="#" target="_blank" rel="noopener">Open <span aria-hidden="true">▶</span></a>
-          <a class="code" id="dCode" href="#" target="_blank" rel="noopener">View code</a>
-          <p class="url" id="dUrl"></p>
+          <div class="detail-side">
+            <a class="play" id="dOpen" href="#" target="_blank" rel="noopener">Open <span aria-hidden="true">↗</span></a>
+            <a class="code" id="dCode" href="#" target="_blank" rel="noopener">View code</a>
+            <div class="view-toggle" role="group" aria-label="Screenshot">
+              <button data-v="desktop" class="on" aria-pressed="true">Desktop</button>
+              <button data-v="mobile" aria-pressed="false">Phone</button>
+            </div>
+            <p class="url" id="dUrl"></p>
+          </div>
         </div>
-      </div>
+      </article>
       <div class="pager" id="pager" role="tablist" aria-label="Choose a site"></div>
       <p class="keys" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> browse · <kbd>Enter</kbd> open · swipe on phones</p>
     </section>
@@ -79,7 +76,7 @@
         <div class="qscore"><b id="qStreak">0</b><span>streak</span><b id="qBest">0</b><span>best</span></div>
       </div>
       <div class="qboard" id="qboard">
-        <button class="qstart" id="qStart">Play a round <span aria-hidden="true">▶</span></button>
+        <button class="qstart" id="qStart">Play a round <span aria-hidden="true">→</span></button>
       </div>
       <p class="qfoot"><a href="https://kimblejennings97.github.io/whohadmore/" target="_blank" rel="noopener">Play the full game: MLB, NBA, NHL, WNBA, soccer, careers →</a></p>
     </section>

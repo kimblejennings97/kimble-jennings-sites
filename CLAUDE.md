@@ -4,6 +4,7 @@ Interactive landing page that links to all of the user's public sites. Plain HTM
 Live: https://kimblejennings97.github.io/kimble-jennings-sites/ (GitHub Pages, `.github/workflows/deploy.yml`;
 **every push to `main` deploys**, so push only when asked).
 
+- Look (redesigned 2026-11-18 at the user's request): calm Linear/Vercel-style. Matte charcoal `#09090B` bg, `#111114` cards, 1px `rgba(255,255,255,0.08)` hairlines, Inter in Title Case (no ALL CAPS), monochrome browser dots, no glows, no background canvas. One unified showcase card (screenshot + details) with pagination dots and no arrow buttons. A site's `color` is used only for the small dot by its kicker.
 - `js/site.js` `SITES` array = the cards (url, code link, screenshots, blurb, tags, accent color). Add a site there + its images in `img/`.
 - Screenshots in `img/` are WebP, desktop 1440x900 and phone 390x844 @2x, captured with headless Chrome from the live sites.
   Wrestling Coach also has `wrestling-moves.webp`, shown when hovering its card.

@@ -49,50 +49,12 @@
   // Every site is shown (category filters were removed while there are only a few sites).
   const visible = () => SITES.map((s, i) => i);
 
-  // ---------------------------------------------------------------- cards
-  const deck = $("deck");
-  const cards = SITES.map((s, i) => {
-    const c = document.createElement("article");
-    c.className = "card";
-    c.style.setProperty("--c", s.color);
-    c.setAttribute("aria-label", s.label);
-    c.innerHTML = `
-      <div class="frame">
-        <div class="chrome"><i></i><i></i><i></i><span></span></div>
-        <div class="shot"><img alt="" loading="${i < 2 ? "eager" : "lazy"}" decoding="async"></div>
-        <div class="glare"></div>
-        <div class="label"></div>
-      </div>
-      <div class="phone"><img alt="" loading="lazy" decoding="async"></div>`;
-    c.querySelector(".chrome span").textContent = s.url.replace(/^https:\/\//, "");
-    const img = c.querySelector(".shot img");
-    img.src = s.img;
-    img.alt = `${s.label} screenshot`;
-    if (s.alt) {
-      const alt = document.createElement("img");
-      alt.className = "alt"; alt.src = s.alt; alt.alt = ""; alt.loading = "lazy";
-      c.querySelector(".shot").appendChild(alt);
-    }
-    c.querySelector(".phone img").src = s.mobile;
-    c.querySelector(".label").textContent = s.label;
-    c.addEventListener("click", () => (i === active ? open() : go(i)));
-    // tilt + glare on the active card
-    const frame = c.querySelector(".frame");
-    c.addEventListener("pointermove", (e) => {
-      if (i !== active || reduce || e.pointerType === "touch") return;
-      const r = frame.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      frame.style.setProperty("--ry", `${(x - 0.5) * 10}deg`);
-      frame.style.setProperty("--rx", `${(0.5 - y) * 8}deg`);
-      frame.style.setProperty("--gx", `${x * 100}%`);
-      frame.style.setProperty("--gy", `${y * 100}%`);
-    });
-    c.addEventListener("pointerleave", () => { frame.style.setProperty("--rx", "0deg"); frame.style.setProperty("--ry", "0deg"); });
-    deck.appendChild(c);
-    return c;
-  });
+  // ---------------------------------------------------------------- showcase: one card (screenshot + details)
+  const stage = $("stage"), shotImg = $("dImg"), altImg = $("dAlt");
+  // warm the cache so switching sites is instant
+  SITES.forEach((s) => [s.img, s.mobile, s.alt].filter(Boolean).forEach((src) => { const im = new Image(); im.src = src; }));
 
-  // pager
+  // pagination dots
   const pager = $("pager");
   const dots = SITES.map((s, i) => {
     const b = document.createElement("button");
@@ -103,31 +65,16 @@
     return b;
   });
 
-  function layout() {
-    const vis = visible();
-    const pos = vis.indexOf(active);
-    const n = vis.length;
-    const narrow = innerWidth < 760;
-    cards.forEach((c, i) => {
-      const k = vis.indexOf(i);
-      c.classList.toggle("hidden", k < 0);
-      c.classList.toggle("active", i === active);
-      if (k < 0) return;
-      // shortest circular distance from the active card
-      let off = k - pos;
-      if (n > 2) { if (off > n / 2) off -= n; if (off < -n / 2) off += n; }
-      const a = Math.abs(off);
-      const x = off * (narrow ? 70 : 52);
-      const tz = -a * (narrow ? 260 : 220);
-      const ry = off === 0 ? 0 : -Math.sign(off) * (narrow ? 50 : 38);
-      c.style.transform = `translate(-50%, -50%) translateX(${x}%) translateZ(${tz}px) rotateY(${ry}deg)`;
-      c.style.zIndex = String(100 - a);
-      c.style.opacity = a > 1.5 ? "0" : a === 0 ? "1" : "0.55";
-      c.style.filter = a === 0 ? "none" : "saturate(.6) brightness(.7)";
-      c.setAttribute("aria-hidden", i === active ? "false" : "true");
-    });
-    dots.forEach((d, i) => { d.hidden = vis.indexOf(i) < 0; d.setAttribute("aria-selected", i === active); });
-    $("prev").hidden = $("next").hidden = n < 2;
+  function paint() {
+    const s = SITES[active];
+    shotImg.src = view === "mobile" ? s.mobile : s.img;
+    shotImg.alt = `${s.label} screenshot`;
+    // Wrestling Coach has a second screenshot shown on hover
+    altImg.hidden = !(s.alt && view === "desktop");
+    if (s.alt) altImg.src = s.alt;
+    $("dShot").href = s.url;
+    $("dChromeUrl").textContent = s.url.replace(/^https:\/\//, "");
+    detail();
   }
 
   function detail() {
@@ -146,46 +93,45 @@
     const st = $("dStatus");
     st.className = "status" + (status[s.id] === true ? " up" : status[s.id] === false ? " down" : "");
     st.lastChild.textContent = status[s.id] === true ? "online" : status[s.id] === false ? "unreachable" : "checking…";
-    bg.setColor(s.color);
   }
 
-  function go(i) {
+  let fadeT = 0;
+  function go(i, instant = false) {
+    if (i === active && !instant) return;
     active = i;
-    layout();
-    detail();
+    dots.forEach((d, k) => d.setAttribute("aria-selected", k === active));
+    if (instant || reduce) { paint(); return; }
+    // quick cross-fade: fade out, swap content, fade back in
+    stage.classList.add("fading");
+    clearTimeout(fadeT);
+    fadeT = setTimeout(() => { paint(); requestAnimationFrame(() => stage.classList.remove("fading")); }, 200);
   }
-  function step(d) {
-    const vis = visible();
-    const p = vis.indexOf(active);
-    go(vis[(p + d + vis.length) % vis.length]);
-  }
+  function step(d) { go((active + d + SITES.length) % SITES.length); }
   function open() { window.open(SITES[active].url, "_blank", "noopener"); }
 
-  $("prev").onclick = () => step(-1);
-  $("next").onclick = () => step(1);
   document.addEventListener("keydown", (e) => {
     if (e.target.closest("input, textarea, select")) return;
     if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
     else if (e.key === "ArrowRight") { step(1); e.preventDefault(); }
     else if (e.key === "Enter" && (e.target === document.body || e.target.id === "stage")) open();
   });
-  // swipe
-  let sx = null;
-  $("stage").addEventListener("pointerdown", (e) => { sx = e.clientX; });
-  $("stage").addEventListener("pointerup", (e) => {
+  // swipe (and don't open the site when the gesture was a swipe)
+  let sx = null, swiped = false;
+  stage.addEventListener("pointerdown", (e) => { sx = e.clientX; swiped = false; });
+  stage.addEventListener("pointerup", (e) => {
     if (sx == null) return;
     const dx = e.clientX - sx; sx = null;
-    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 50) { swiped = true; step(dx < 0 ? 1 : -1); }
   });
+  $("dShot").addEventListener("click", (e) => { if (swiped) { e.preventDefault(); swiped = false; } });
 
   // desktop / phone screenshot
   document.querySelectorAll(".view-toggle button").forEach((b) => b.addEventListener("click", () => {
     view = b.dataset.v;
     document.querySelectorAll(".view-toggle button").forEach((x) => { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); });
     document.body.classList.toggle("mode-mobile", view === "mobile");
-    cards.forEach((c, i) => { c.querySelector(".shot img").src = view === "mobile" ? SITES[i].mobile : SITES[i].img; });
+    paint();
   }));
-  addEventListener("resize", layout);
 
   // ---------------------------------------------------------------- site status (reachability)
   const status = {};
@@ -298,8 +244,8 @@
     $("qStreak").textContent = q.streak; $("qBest").textContent = q.best;
     const msg = wrap.querySelector(".qmsg");
     msg.textContent = ok ? "Correct!" : "Not this time, streak reset";
-    msg.style.color = ok ? "#3ddc84" : "#f87171";
-    const nx = document.createElement("button"); nx.className = "qnext"; nx.textContent = "Next round ▶";
+    msg.classList.add(ok ? "ok" : "no");
+    const nx = document.createElement("button"); nx.className = "qnext"; nx.textContent = "Next round →";
     nx.onclick = round;
     wrap.appendChild(nx);
     nx.focus({ preventScroll: true });
@@ -307,48 +253,8 @@
   $("qStart").onclick = async () => {
     $("qStart").textContent = "Loading…";
     try { q.data = await loadWhm(); round(); }
-    catch { $("qStart").textContent = "Couldn't load the game data. Try again ▶"; }
+    catch { $("qStart").textContent = "Couldn't load the game data. Try again →"; }
   };
 
-  // ---------------------------------------------------------------- background: drifting constellation tinted by the active site
-  const bg = (() => {
-    const cv = $("bg"), ctx = cv.getContext("2d");
-    let w, h, pts = [], color = "#ffd23f", mx = -1e4, my = -1e4;
-    const resize = () => {
-      w = cv.width = innerWidth * devicePixelRatio; h = cv.height = innerHeight * devicePixelRatio;
-      const n = Math.min(110, Math.round((innerWidth * innerHeight) / 14000));
-      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25 }));
-    };
-    addEventListener("resize", resize);
-    addEventListener("pointermove", (e) => { mx = e.clientX * devicePixelRatio; my = e.clientY * devicePixelRatio; });
-    resize();
-    const link = 140 * devicePixelRatio;
-    function frame() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of pts) {
-        if (!reduce) {
-          p.x += p.vx; p.y += p.vy;
-          const dx = mx - p.x, dy = my - p.y, d = Math.hypot(dx, dy);
-          if (d < 180 * devicePixelRatio) { p.x -= dx * 0.004; p.y -= dy * 0.004; } // gently parts around the cursor
-          if (p.x < 0 || p.x > w) p.vx *= -1;
-          if (p.y < 0 || p.y > h) p.vy *= -1;
-        }
-      }
-      ctx.strokeStyle = color; ctx.fillStyle = color;
-      for (let i = 0; i < pts.length; i++) {
-        const a = pts[i];
-        for (let j = i + 1; j < pts.length; j++) {
-          const b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (d < link) { ctx.globalAlpha = (1 - d / link) * 0.22; ctx.lineWidth = devicePixelRatio; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
-        }
-        ctx.globalAlpha = 0.55; ctx.beginPath(); ctx.arc(a.x, a.y, 1.6 * devicePixelRatio, 0, Math.PI * 2); ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      if (!reduce) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-    return { setColor(c) { color = c; if (reduce) requestAnimationFrame(frame); } };
-  })();
-
-  go(0);
+  go(0, true);
 })();
