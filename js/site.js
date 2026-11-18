@@ -33,6 +33,14 @@
       desc: "Start with $1,000 of fake money and bet real DraftKings lines: moneylines, spreads, totals, player props and parlays. Bets grade themselves from ESPN results.",
       feats: ["Real lines", "Props + parlays", "Auto grading", "No real money, ever"],
     },
+    {
+      id: "momentum", kind: "stats", label: "Momentum Picks", color: "#a78bfa",
+      url: "https://kimblejennings97.github.io/momentum-dashboard/", code: "https://github.com/kimblejennings97/momentum-dashboard",
+      img: "img/momentum-desktop.webp", mobile: "img/momentum-mobile.webp",
+      kicker: "Stock screener",
+      desc: "Every S&P 500 stock scored on 6–12 month momentum, with the top 20 picks, a backtest against SPY and the sector mix. Rebuilt automatically on the 1st of each month.",
+      feats: ["~500 stocks scored", "Top 20 picks", "Backtest vs SPY", "Monthly auto-update", "Not investment advice"],
+    },
   ];
 
   const $ = (id) => document.getElementById(id);

@@ -10,4 +10,5 @@ Live: https://kimblejennings97.github.io/kimble-jennings-sites/ (GitHub Pages, `
 - Live bits: ticker reads `meta.json` from the stat-analysis `data` branch; each card pings its site (no-cors) for an
   online dot; "Quick round" loads `data-nfl.js` from the live Who Had More site.
 - Icons: gold trophy home-screen icon drawn as SVG in `tools/icon.html`; `powershell -File tools/make-icons.ps1 img\icons` renders the PNGs (apple-touch 180, 192, 512, favicon 32) used by `index.html` and `manifest.webmanifest`.
-- Not listed on purpose: recipe-box (household app with no login; must stay unlisted) and the trading dashboard.
+- Not listed on purpose: recipe-box (household app with no login; must stay unlisted). The Alpaca trading bot has no public page; only its companion Momentum Picks dashboard is listed (added 2026-11-17 at the user's request).
+- Momentum Picks screenshots: headless Chrome won't render narrower than ~500px, so the phone shot was taken of a 390px iframe in a wider window and cropped to 780x1688.
