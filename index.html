@@ -16,78 +16,11 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=VT323&display=swap">
 </head>
-<body>
-  <header class="top">
-    <div class="brand">
-      <span class="badge" aria-hidden="true">KJ</span>
-      <div>
-        <h1>Kimble Jennings</h1>
-        <p class="tag">Sports stat tools, games &amp; side projects</p>
-      </div>
-    </div>
-    <div class="ticker" aria-label="Live data">
-      <div class="ticker-track" id="ticker">
-        <span class="tick"><i class="dot"></i>Loading live data…</span>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="select" aria-label="Sites">
-      <article class="showcase" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="Sites. Use the left and right arrow keys to browse and Enter to open.">
-        <div class="frame">
-          <div class="chrome"><i></i><i></i><i></i><span id="dChromeUrl"></span></div>
-          <a class="shot" id="dShot" href="#" target="_blank" rel="noopener" tabindex="-1">
-            <img id="dImg" alt="" decoding="async">
-            <img id="dAlt" class="alt" alt="" decoding="async" hidden>
-          </a>
-        </div>
-        <div class="detail" id="detail" aria-live="polite">
-          <div class="detail-main">
-            <div class="detail-kicker"><i class="hue" aria-hidden="true"></i><span id="dKind"></span><span class="status" id="dStatus"><i></i>checking…</span></div>
-            <h3 id="dTitle"></h3>
-            <p id="dDesc"></p>
-            <ul class="feats" id="dFeats"></ul>
-          </div>
-          <div class="detail-side">
-            <a class="play" id="dOpen" href="#" target="_blank" rel="noopener">Open <span aria-hidden="true">↗</span></a>
-            <a class="code" id="dCode" href="#" target="_blank" rel="noopener">View code</a>
-            <div class="view-toggle" role="group" aria-label="Screenshot">
-              <button data-v="desktop" class="on" aria-pressed="true">Desktop</button>
-              <button data-v="mobile" aria-pressed="false">Phone</button>
-            </div>
-            <p class="url" id="dUrl"></p>
-          </div>
-        </div>
-      </article>
-      <div class="pager" id="pager" role="tablist" aria-label="Choose a site"></div>
-      <p class="keys" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> browse · <kbd>Enter</kbd> open · swipe on phones</p>
-    </section>
-
-    <section class="quick" aria-labelledby="qTitle">
-      <div class="quick-head">
-        <div>
-          <h2 id="qTitle">Quick round: <em>Who had more?</em></h2>
-          <p class="muted">Real NFL seasons from the game's data. Pick the bigger number.</p>
-        </div>
-        <div class="qscore"><b id="qStreak">0</b><span>streak</span><b id="qBest">0</b><span>best</span></div>
-      </div>
-      <div class="qboard" id="qboard">
-        <button class="qstart" id="qStart">Play a round <span aria-hidden="true">→</span></button>
-      </div>
-      <p class="qfoot"><a href="https://kimblejennings97.github.io/whohadmore/" target="_blank" rel="noopener">Play the full game: MLB, NBA, NHL, WNBA, soccer, careers →</a></p>
-    </section>
-  </main>
-
-  <footer class="foot">
-    <p>Built with plain HTML, CSS and JavaScript. Stats refresh daily from free public data (nflverse, ESPN, MLB Stats API).
-      Unofficial fan projects, not affiliated with any league or team.</p>
-    <p><a href="https://github.com/kimblejennings97" target="_blank" rel="noopener">github.com/kimblejennings97</a></p>
-  </footer>
-
-  <script src="js/site.js"></script>
+<body class="bg-base text-ink antialiased">
+  <div id="root"></div>
+  <noscript><p style="padding:2rem;color:#c4c4c9;font-family:sans-serif">This page needs JavaScript. My sites: <a href="https://kimblejennings97.github.io/stat-analysis/">Stat Analysis</a>, <a href="https://kimblejennings97.github.io/whohadmore/">Who Had More?</a>, <a href="https://wrestling-coach.kimble-jennings.workers.dev/">Wrestling Coach</a>, <a href="https://mock-sportsbook.pages.dev/">Mock Sportsbook</a>, <a href="https://kimblejennings97.github.io/momentum-dashboard/">Momentum Picks</a>.</p></noscript>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
